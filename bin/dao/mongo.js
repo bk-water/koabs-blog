@@ -18,7 +18,11 @@ db.once('open', function () {
 });
 
 var tables = {
-    user: 'user'
+    user: 'user',
+    tag: 'tag',
+    file: 'file',
+    collection: 'collection',
+    article: 'article'
 }
 
 //var PersonSchema = new mongoose.Schema({

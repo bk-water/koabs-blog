@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/css/app.css' />
+    <link rel='stylesheet' href='/css/fonts.css' />
+  </head>
+  <body>
+    <div class="wrapper">
+      <section class="login">
+          <header class="login-header">
+            <h1 class="brand">KOABS.COM</h1>
+          </header>
+        <form action="/login" method="post" class="login-form">
+          <div class="row">
+            <label for="" class="label">用户名</label>
+            <div><input type="text" class="ipt" name="username"></div>
+          </div>
+          <div class="row">
+            <label for="" class="label">密码</label>
+            <div><input type="password" class="ipt" name="password"></div>
+          </div>
+          <div class="row">
+            <button class="btn btn-primary">登入</button>
+          </div>
+        </form>
+        <footer class="login-footer">
+          返回首页 <a href="/">koabs</a>
+        </footer>
+      </section>
+    </div>
+  </body>
+</html>

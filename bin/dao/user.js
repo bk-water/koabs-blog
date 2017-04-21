@@ -89,7 +89,7 @@ var user = {
         userEntity.save();
     },
     check:function(obj, callback) {
-        UserModel.find({name:'张珊'},null, function (err, doc){
+        UserModel.find({name:obj.name},null, function (err, doc){
             console.log(err);
             console.log(doc)
             console.log(doc[0].email);
