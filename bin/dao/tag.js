@@ -10,8 +10,8 @@ var tableName = require('./mongo').tables;
 var TagSchema = new mongoose.Schema({
     _id: Number,
     tag: String,
-    articles: Number,
-    articlesList: [Number],
+    articles: Number, // 标签包含的文章数
+    articlesList: [Number], // 标签包含的文章ID列表
     users:Number,
     usersList: [Number]
 });

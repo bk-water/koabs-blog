@@ -4,8 +4,8 @@
 'use strict';
 var mongoIp = '127.0.0.1',
     mongoPort = 8908,
-    mongoUsername = 'root',
-    mongoPassword = 'root',
+    mongoUsername = 'koabs',
+    mongoPassword = 'koabs',
     mongoDbName = 'koabsblog',
     mongoose = require('mongoose'),
 // 添加用户名 密码 认证
@@ -21,7 +21,7 @@ var tables = {
     user: 'user',
     tag: 'tag',
     file: 'file',
-    collection: 'collection',
+    special: 'special',
     article: 'article'
 }
 

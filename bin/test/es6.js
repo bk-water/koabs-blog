@@ -36,22 +36,22 @@
  * Node.js Promise
  */
 
-//var getJSON = function (url) {
-//    var promise = new Promise(function(resolve, reject){
-//        setTimeout(function(){
-//            console.log("getJSON URLDATA" + url);
-//            reject("URLDATA");
-//        },1000)
-//        console.log("getJSON return 1");
-//    })
-//    return promise;
-//}
-//
-//getJSON("daf").then(function(json){
-//    console.log(json)
-//}).catch(function(err){
-//    console.log(err +"err")
-//}).done();
+var getJSON = function (url) {
+    var promise = new Promise(function(resolve, reject){
+        setTimeout(function(){
+            console.log("getJSON URLDATA" + url);
+            reject("URLDATA");
+        },1000)
+        console.log("getJSON return 1");
+    })
+    return promise;
+}
+
+getJSON("daf").then(function(json){
+    console.log(json)
+}).catch(function(err){
+    console.log(err +"err")
+}).done();
 
 //function getFoo () {
 //    return new Promise(function (resolve, reject){

@@ -9,8 +9,25 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./bin/routes/index');
-var users = require('./bin/routes/users');
+// 全局变量
+var global = {};
+// dao
+global.dao = {};
+global.dao.tags = require('./bin/dao/tag');
+global.dao.article = require('./bin/dao/article');
+global.dao.special = require('./bin/dao/special');
+global.dao.users = require('./bin/dao/user');
+
+// routes
+global.routes = {};
+global.routes.dashboard = require('./bin/routes/dashboard');
+global.routes.users = require('./bin/routes/user');
+global.routes.article = require('./bin/routes/article');
+global.routes.tags = require('./bin/routes/tag');
+global.routes.special = require('./bin/routes/special');
+
+
+
 
 var app = express();
 
@@ -27,8 +44,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static/src')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/', global.routes.index);
+app.use('/dashboard', global.routes.dashboard);
+app.use('/users', global.routes.users);
+app.use('/article', global.routes.article);
+app.use('/tags', global.routes.tags);
+app.use('/special', global.routes.special);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

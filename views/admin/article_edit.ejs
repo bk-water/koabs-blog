@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/css/app.css' />
+    <link rel='stylesheet' href='/css/fonts.css' />
+    <link rel='stylesheet' href='/js/plugin/md/css/editormd.min.css' />
+  </head>
+  <body>
+    <div class="wrapper">
+      <% include ../admin/common/head %>
+      <section class="main">
+        <% include ../admin/common/navigation %>
+        <main class="content">
+          <div class="inner">
+            <form action="" id="sForm">
+            <div class="row"><label for="" class="label">标题</label>
+              <div><input type="text" name="title" class="ipt"></div>
+            </div>
+            <div class="row"><label for="" class="label">关键字
+                <span>JAVA</span><span>生活</span><span>JS</span>
+              </label>
+              <div><input type="text" name="tags" class="ipt"></div>
+            </div>
+            <div class="row"><label>专辑</label>
+              <div style="display: inline-block">
+                <select name="special" class="form-control">
+                  <option value="1">专辑一</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <label>置顶</label>
+              <div style="display: inline-block">
+                <select name="top" class="form-control">
+                  <option value="0">默认</option>
+                  <option value="1">置顶</option>
+                </select>
+              </div>
+            </div>
+            <div id="editormd" style="min-height: 300px;">
+              <textarea style="display:none;">### Hello Editor.md !</textarea>
+            </div>
+            <div class="row">
+              <button id="submit" class="btn btn-primary">保存</button>
+            </div>
+            </form>
+          </div>
+        </main>
+      </section>
+    </div>
+  </body>
+  <script src="/js/plugin/jquery191.js"></script>
+  <script src="/js/plugin/md/editormd.min.js"></script>
+  <script type="text/javascript">
+    var _global = {
+      fn:{
+        init: function (editor) {
+          this.submit(editor);
+        },
+        submit: function(editor) {
+              $("#submit").click(function () {
+                var data = $("#sForm").serializeArray();
+                data.push({name:"mdContent",value:editor.getMarkdown()})// 获取 Markdown 源码
+                data.push({name:"content",value:editor.getHTML()})// 获取 html 源码
+                console.log(data);
+                $.post("/article/save",data, function (result) {
+                  
+                });
+                return false;
+              })
+        }
+      }
+    }
+
+    $(function() {
+      var editor = editormd("editormd", {
+        path : "/js/plugin/md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
+        saveHTMLToTextarea : true
+      });
+
+      _global.fn.init(editor);
+      /*
+       // or
+       var editor = editormd({
+       id   : "editormd",
+       path : "../lib/"
+       });
+       */
+    });
+  </script>
+</html>

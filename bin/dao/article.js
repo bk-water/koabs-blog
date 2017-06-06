@@ -9,19 +9,17 @@ var tableName = require('./mongo').tables;
 
 var ArticleSchema = new mongoose.Schema({
     _id: Number,
-    author: String,
-    date: Date,
-    display: [Number],
-    status:Number,
-    refer: [Number],
-    title:String,
-    cover:String,
-    content:String,
-    host:Number,
-    visitors:Number,
-    updateTime:Date,
-    collection:Number, // 属于哪个专辑
-    tagsList:[Number]
+    author: String, // 作者名称
+    date: Date, // 发布时间
+    status:Number, // 状态 0 禁用 1 启用
+    title:String, // 标题
+    content:String, // html格式内容
+    mdContent:String, // markdown 格式内容
+    visitors:Number, // 访问次数
+    updateTime:Date, // 更新时间
+    //collection:Number, // 属于哪个专辑
+    tagsIdList:[Number], // 标签ID列表
+    top:Number // 0不置顶, 1置顶
 });
 
 var ArticleModel = db.model(tableName.article, ArticleSchema, tableName.article);
