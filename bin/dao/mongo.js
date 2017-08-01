@@ -22,7 +22,8 @@ var tables = {
     tag: 'tag',
     file: 'file',
     special: 'special',
-    article: 'article'
+    article: 'article',
+    autoIncrement:'autoIncrement'
 }
 
 //var PersonSchema = new mongoose.Schema({

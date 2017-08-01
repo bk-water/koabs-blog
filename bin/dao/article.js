@@ -8,7 +8,7 @@ var db = require('./mongo').db;
 var tableName = require('./mongo').tables;
 
 var ArticleSchema = new mongoose.Schema({
-    _id: Number,
+    _id: mongoose.Schema.ObjectId,
     author: String, // 作者名称
     date: Date, // 发布时间
     status:Number, // 状态 0 禁用 1 启用
@@ -42,11 +42,19 @@ var article = {
     },
     deleteById: function (_id, callback) {
         ArticleModel.remove(err, {_id:_id});
+    },
+    find:function(obj,callback) {
+        ArticleModel.find({_id: mongoose.Types.ObjectId(obj._id)},null, function (err, doc){
+            console.log(err);
+            console.log(doc)
+            callback(err, doc);
+        });
     }
 };
 
 module.exports = {
     create:article.create,
     update:article.update,
-    deleteById:article.deleteById
+    deleteById:article.deleteById,
+    find:article.find
 };

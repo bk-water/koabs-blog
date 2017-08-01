@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title><%= article.title %></title>
     <link rel='stylesheet' href='/css/app.css' />
     <link rel='stylesheet' href='/css/fonts.css' />
     <link rel='stylesheet' href='/js/plugin/md/css/editormd.min.css' />
@@ -15,7 +15,7 @@
           <div class="inner">
             <form action="" id="sForm">
             <div class="row"><label for="" class="label">标题</label>
-              <div><input type="text" name="title" class="ipt"></div>
+              <div><input type="text" name="title" value="<%= article.title %>" class="ipt"></div>
             </div>
             <div class="row"><label for="" class="label">关键字
                 <span>JAVA</span><span>生活</span><span>JS</span>
