@@ -9,8 +9,27 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./bin/routes/index');
-var users = require('./bin/routes/users');
+// 全局变量
+global.koabs = {}
+// dao
+koabs.dao = {};
+koabs.dao.tags = require('./bin/dao/tag');
+koabs.dao.article = require('./bin/dao/article');
+koabs.dao.special = require('./bin/dao/special');
+koabs.dao.users = require('./bin/dao/user');
+koabs.dao.autoIncrement = require('./bin/dao/autoIncrement');
+
+// routes
+koabs.routes = {};
+koabs.routes.index = require('./bin/routes/index');
+koabs.routes.dashboard = require('./bin/routes/dashboard');
+koabs.routes.users = require('./bin/routes/user');
+koabs.routes.article = require('./bin/routes/article');
+koabs.routes.tags = require('./bin/routes/tag');
+koabs.routes.special = require('./bin/routes/special');
+
+
+
 
 var app = express();
 
@@ -27,8 +46,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static/src')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/', koabs.routes.index);
+app.use('/dashboard', koabs.routes.dashboard);
+app.use('/users', koabs.routes.users);
+app.use('/article', koabs.routes.article);
+app.use('/tags', koabs.routes.tags);
+app.use('/special', koabs.routes.special);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

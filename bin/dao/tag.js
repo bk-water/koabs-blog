@@ -10,8 +10,8 @@ var tableName = require('./mongo').tables;
 var TagSchema = new mongoose.Schema({
     _id: Number,
     tag: String,
-    articles: Number,
-    articlesList: [Number],
+    articles: Number, // 标签包含的文章数
+    articlesList: [Number], // 标签包含的文章ID列表
     users:Number,
     usersList: [Number]
 });
@@ -37,11 +37,20 @@ var tag = {
     },
     deleteById: function (_id, callback) {
         TagModel.remove(err, {_id:_id});
+    },
+    findByIds: function(ids,callback) {
+        TagModel.find({_id: {$in: ids}}, null, function (err, doc) {
+            console.log(err);
+            console.log(doc)
+            console.log(doc[0].email);
+            callback(err, doc);
+        });
     }
 };
 
 module.exports = {
     create:tag.create,
     update:tag.update,
-    deleteById:tag.deleteById
+    deleteById:tag.deleteById,
+    findByIds:tag.findByIds
 };

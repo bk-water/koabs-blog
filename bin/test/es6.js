@@ -32,9 +32,9 @@
 //    }
 //});
 
-/**
- * Node.js Promise
- */
+///**
+// * Node.js Promise
+// */
 
 //var getJSON = function (url) {
 //    var promise = new Promise(function(resolve, reject){
@@ -53,53 +53,53 @@
 //    console.log(err +"err")
 //}).done();
 
-//function getFoo () {
-//    return new Promise(function (resolve, reject){
-//        reject('food');
-//    });
-//}
-//
-//var g = function* () {
-//    try {
-//        var foo = yield getFoo();
-//        console.log(foo);
-//    } catch (e) {
-//        console.log(e +"ds");
-//    }
+function getFoo () {
+    return new Promise(function (resolve, reject){
+        reject('food');
+    });
+}
+
+var g = function* () {
+    try {
+        var foo = yield getFoo();
+        console.log(foo);
+    } catch (e) {
+        console.log(e +"ds");
+    }
+};
+
+function run (generator) {
+    var it = generator();
+
+    function go(result) {
+        if (result.done) return result.value;
+
+        return result.value.then(function (value) {
+            return go(it.next(value));
+        }, function (error) {
+            return go(it.throw(error));
+        });
+    }
+
+    go(it.next());
+}
+
+run(g);
+
+//var sleep = function (time) {
+//    return new Promise(function (resolve, reject) {
+//        setTimeout(function () {
+//            resolve();
+//        }, time);
+//    })
 //};
 //
-//function run (generator) {
-//    var it = generator();
+//var start = async function(){
+//    // 在这里使用起来就像同步代码那样直观
+//    console.log('start');
+//    await sleep(3000);
+//    console.log('end');
+//};
 //
-//    function go(result) {
-//        if (result.done) return result.value;
-//
-//        return result.value.then(function (value) {
-//            return go(it.next(value));
-//        }, function (error) {
-//            return go(it.throw(error));
-//        });
-//    }
-//
-//    go(it.next());
-//}
-//
-//run(g);
-
-var sleep = function (time) {
-    return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            resolve();
-        }, time);
-    })
-};
-
-var start = async function(){
-    // 在这里使用起来就像同步代码那样直观
-    console.log('start');
-    await sleep(3000);
-    console.log('end');
-};
-
-start();
+//start();
 

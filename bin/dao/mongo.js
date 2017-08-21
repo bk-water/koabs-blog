@@ -21,8 +21,9 @@ var tables = {
     user: 'user',
     tag: 'tag',
     file: 'file',
-    collection: 'collection',
-    article: 'article'
+    special: 'special',
+    article: 'article',
+    autoIncrement:'autoIncrement'
 }
 
 //var PersonSchema = new mongoose.Schema({
