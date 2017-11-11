@@ -13,11 +13,11 @@ var bodyParser = require('body-parser');
 global.koabs = {}
 // dao
 koabs.dao = {};
-koabs.dao.tags = require('./bin/dao/tag');
-koabs.dao.article = require('./bin/dao/article');
-koabs.dao.special = require('./bin/dao/special');
-koabs.dao.users = require('./bin/dao/user');
-koabs.dao.autoIncrement = require('./bin/dao/autoIncrement');
+koabs.dao.tags = null;// require('./bin/dao/tag');
+koabs.dao.article = null; // require('./bin/dao/article');
+koabs.dao.special = null; // require('./bin/dao/special');
+koabs.dao.users = null; // require('./bin/dao/user');
+koabs.dao.autoIncrement = null; // require('./bin/dao/autoIncrement');
 
 // routes
 koabs.routes = {};

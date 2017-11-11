@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var articleDao = require("../dao/article");
+var articleDao = koabs.dao.article;
 /**
  * 文章列表页面
  * @param pageNum
