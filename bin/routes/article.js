@@ -7,6 +7,7 @@ var articleDao = koabs.dao.article;
  * @param pageSize
  */
 router.get('/', function(req, res, next) {
+  // 列表
   // 查询所有文章,分页
   res.render('admin/article_edit', { title: '编辑文章' });
 });
