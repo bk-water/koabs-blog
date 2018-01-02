@@ -7,23 +7,27 @@ var articleDao = koabs.dao.article;
  * @param pageSize
  */
 router.get('/', function(req, res, next) {
-  // 列表
-  // 查询所有文章,分页
-  res.render('admin/article_edit', { title: '编辑文章' });
+  articleDao.findByPage({},function(error,ret) {
+    res.render('admin/article_list', { title: '文章列表' });
+  });
 });
 
 /**
  * 文章详情页面
  */
 router.get('/:id', function(req, res, next) {
-  res.render('admin/article_edit', { title: '编辑文章' });
+  articleDao.find({_id:'-1'},function(error, ret) {
+    res.render('admin/article_edit',ret);
+  })
 });
 
 /**
  * 删除文章
  */
 router.post('/delete', function(req, res, next) {
-  res.send('respond with a resource');
+  articleDao.deleteById({_id:'-1'},function(error, ret) {
+    res.send('删除成功');
+  }); 
 });
 
 /**
@@ -47,8 +51,9 @@ router.post('/save', function (req, res, next) {
   //更新Tag文章列表
   articleDao.create(article, function (ret) {
     console.log(ret);
+    res.json(article);   
   });
-  res.json(article);
+ 
 });
 
 module.exports = router;

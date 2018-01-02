@@ -49,6 +49,24 @@ var article = {
             console.log(doc)
             callback(err, doc);
         });
+    },
+    findByPage:function(obj,callback) {
+        ArticleModel.count({name:obj.name},null, function (err, count){
+            ArticleModel.find({name:obj.name})
+            .skip(obj.page * 5)
+            .limit(5)
+            .sort({'_id':-1})
+            .exec(function(err, doc) {
+                doc.paginator = {
+                    pageLength:10,
+                    pageNo:1,
+                    totalCount:count
+                };
+
+                // 返回分页对象
+                callback(err, doc);
+            });
+        });
     }
 };
 
@@ -56,5 +74,6 @@ module.exports = {
     create:article.create,
     update:article.update,
     deleteById:article.deleteById,
-    find:article.find
+    find:article.find,
+    findByPage:article.findByPage
 };
