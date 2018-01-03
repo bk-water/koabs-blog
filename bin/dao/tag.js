@@ -25,7 +25,27 @@ var tag = {
     },
     update: function (obj, callback) {
         var tagEntity = new TagModel(obj);
-        tagEntity.save();
+        TagModel.findByIdAndUpdate({},{},function(err, res) {
+            var ss = new Array();
+            ss.indexOf("");
+            callback(err, res);
+        })
+    },
+    updateByArticle: function (obj, callback) {
+        var tags = article.tags.split(",");
+        obj.tagsIdList = '';
+        each(tags,function(k){
+            // 查询保存或者更新,把返回的tag Id 反写到artice tagIds数组中 同时更新文章列表
+            TagModel.update({tag:k},{},{upsert:true},function (err, raw) {
+                raw[0].
+            })
+        })
+        var tagEntity = new TagModel(obj);
+        TagModel.findByIdAndUpdate({},{},function(err, res) {
+            var ss = new Array();
+            ss.indexOf("");
+            callback(err, res);
+        })
     },
     check:function(obj, callback) {
         TagModel.find({name:obj.name},null, function (err, doc){

@@ -23,18 +23,47 @@ AutoIncrementSchema.statics.findAndModify = function (query, sort, doc, options,
 var AutoIncrementModel = db.model(tableName.autoIncrement, AutoIncrementSchema, tableName.autoIncrement);
 
 var autoIncrement = {
-    getNextId:function(obj, callback){
+    getNextId:function(obj){
         //var autoIncrementModel = new AutoIncrementModel(obj);
         //var  id = AutoIncrementModel.findAndModify({query:{_id:obj}, update:{$inc:{'value':1}}, new:true},callback);
-        var id = AutoIncrementModel.findOneAndUpdate({_id:obj}, {$inc:{value:1}}, callback);
-        console.log(id);
+        AutoIncrementModel.findOneAndUpdate({_id:obj}, {$inc:{value:1}}).Promise
+       return new Promise (function (resolve, reject) {
+           AutoIncrementModel.findOneAndUpdate({_id:obj}, {$inc:{value:1}}, function(err,doc,res) {
+               console.log("err:" +err);
+               console.log("" + doc.value + "_id"+doc._id);
+                if (!err) {
+                    resolve(doc.value);
+                } else {
+                    reject(err);
+                }
+            });
+        });
     },
     create:function(obj, callback){
         var autoEntity = new AutoIncrementModel({_id:obj,value:1});
         userEntity.save(callback);
     },
     getArticleId: function (callback) {
-        this.getNextId("Article",callback)
+        this.getNextId("Article",function(err, res) {
+            var id = "A" + res.value;
+            callback(err, id);
+        })
+    },
+    getTagId: function (callback) {
+        this.getNextId("Tag",function(err, res) {
+            var id = "T" + res.value;
+            callback(err, id);
+        })
+    },
+    getSpecialId: function (callback) {
+        this.getNextId("Special",function(err, res) {
+            var id = "S" + res.value;
+            callback(err, id);
+        })
+    },
+    getUserId: function () {
+        var id = autoIncrement.getNextId("User");
+        return "U" + id;
     },
     init: function (callback) {
         var article =  AutoIncrementModel.create({_id:'Article',value:1});
@@ -49,9 +78,9 @@ var autoIncrement = {
 };
 
 module.exports = {
-    getNextId:autoIncrement.getNextId,
     getArticleId:autoIncrement.getArticleId,
+    getTagId:autoIncrement.getTagId,
+    getSpecialId:autoIncrement.getSpecialId,
+    getUserId:autoIncrement.getUserId,
     init:autoIncrement.init
 };
-
-// 并发编程

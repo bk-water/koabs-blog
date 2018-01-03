@@ -24,13 +24,9 @@ var ArticleSchema = new mongoose.Schema({
 
 var ArticleModel = db.model(tableName.article, ArticleSchema, tableName.article);
 var article = {
-    create:function(obj, callback){
+    save: function (obj, callback) {
         var articleEntity = new ArticleModel(obj);
         articleEntity.save(callback);
-    },
-    update: function (obj, callback) {
-        var articleEntity = new ArticleModel(obj);
-        articleEntity.save();
     },
     check:function(obj, callback) {
         ArticleModel.find({name:obj.name},null, function (err, doc){
@@ -71,8 +67,7 @@ var article = {
 };
 
 module.exports = {
-    create:article.create,
-    update:article.update,
+    create:article.save,
     deleteById:article.deleteById,
     find:article.find,
     findByPage:article.findByPage

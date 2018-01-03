@@ -39,20 +39,25 @@ router.post('/save', function (req, res, next) {
   if (article._id) {
     article._id = null;
   }
+  Promise.
+  articleDao.save(article, function (err, ret) {
+    var tags = article.tags.split(",");
+    article._id = ret._id;
+    
+    console.log(ret);
+    res.json(article);   
+  });
   //1. 分割tags 保存对应的标签
   //2. 把不存在的tag保存到数据库
   //3. 把tagId查询出来保存到文章里面
-  //var tags = article.tags.split(",");
+
   //// 更新文章tagIds数组
   //each(tags,function(k){
   //  // 查询保存或者更新,把返回的tag Id 反写到artice tagIds数组中 同时更新文章列表
   //
   //})
   //更新Tag文章列表
-  articleDao.create(article, function (ret) {
-    console.log(ret);
-    res.json(article);   
-  });
+ 
  
 });
 
