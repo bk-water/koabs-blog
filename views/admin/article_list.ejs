@@ -32,22 +32,27 @@
 
     function initTable() {
       $table.bootstrapTable({
-        url: 'http://issues.wenzhixin.net.cn/examples/bootstrap_table/data',
+        url: '/article',
 //        height: getHeight(),
         columns: [{
-          field: 'id',
-          title: 'Item ID'
+          field: '_id',
+          title: 'ID'
         }, {
-          field: 'name',
-          title: 'Item Name'
+          field: 'date',
+          title: '发布时间'
         }, {
-          field: 'price',
-          title: 'Item Price'
+          field: 'title',
+          title: '标题'
         }],
         pagination:true,
         sidePagination:'server',
 //        paginationLoop:true,
         pageList:[10,15,20,50],
+        responseHandler: function(res) {
+          res.total = res.paginator.totalCount;
+          return res;
+        },
+        dataField:'data',
         locale:'zh-CN',
 //        ajax: function () {
 //

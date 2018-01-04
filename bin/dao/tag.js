@@ -6,14 +6,15 @@
 var mongoose = require('mongoose');
 var db = require('./mongo').db;
 var tableName = require('./mongo').tables;
+var autoIncrement = require('./autoIncrement');
 
 var TagSchema = new mongoose.Schema({
-    _id: Number,
+    _id: String,
     tag: String,
     articles: Number, // 标签包含的文章数
-    articlesList: [Number], // 标签包含的文章ID列表
+    articlesList: [String], // 标签包含的文章ID列表
     users:Number,
-    usersList: [Number]
+    usersList: [String]
 });
 
 var TagModel = db.model(tableName.tag, TagSchema, tableName.tag);
@@ -25,27 +26,42 @@ var tag = {
     },
     update: function (obj, callback) {
         var tagEntity = new TagModel(obj);
+    
         TagModel.findByIdAndUpdate({},{},function(err, res) {
             var ss = new Array();
             ss.indexOf("");
             callback(err, res);
         })
     },
-    updateByArticle: function (obj, callback) {
-        var tags = article.tags.split(",");
-        obj.tagsIdList = '';
-        each(tags,function(k){
-            // 查询保存或者更新,把返回的tag Id 反写到artice tagIds数组中 同时更新文章列表
-            TagModel.update({tag:k},{},{upsert:true},function (err, raw) {
-                raw[0].
-            })
-        })
-        var tagEntity = new TagModel(obj);
-        TagModel.findByIdAndUpdate({},{},function(err, res) {
-            var ss = new Array();
-            ss.indexOf("");
-            callback(err, res);
-        })
+    updateByArticle: async function (obj, callback) {
+        let tagsIdList = new Array();
+        let tags = obj.tags.split(",");
+        for(let tag of tags) {
+          // 查询保存或者更新,把返回的tag Id 反写到artice tagIds数组中 同时更新文章列表
+          let raw = await TagModel.find({tag:tag}).exec();
+          let tagEntity;
+          if (raw.length >0) {
+            tagEntity = raw[0];
+            let articleSet = new Set(tagEntity.articlesList);
+            articleSet.add(obj._id);
+            tagEntity.articlesList = Array.from(articleSet.values());
+            tagEntity.articles = articleSet.size;
+          } else {
+            let _id = await autoIncrement.getTagId();
+            tagEntity = new TagModel({
+                _id: _id,
+                tag: tag,
+                articles: 1,
+                articlesList: [obj._id],
+                users:0,
+                usersList: []
+            });
+          }
+          await tagEntity.save();
+          tagsIdList.push(tagEntity._id);
+        };
+
+        return tagsIdList;
     },
     check:function(obj, callback) {
         TagModel.find({name:obj.name},null, function (err, doc){
@@ -71,6 +87,7 @@ var tag = {
 module.exports = {
     create:tag.create,
     update:tag.update,
+    updateByArticle:tag.updateByArticle,
     deleteById:tag.deleteById,
     findByIds:tag.findByIds
 };

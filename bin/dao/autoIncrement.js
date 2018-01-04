@@ -26,13 +26,10 @@ var autoIncrement = {
     getNextId:function(obj){
         //var autoIncrementModel = new AutoIncrementModel(obj);
         //var  id = AutoIncrementModel.findAndModify({query:{_id:obj}, update:{$inc:{'value':1}}, new:true},callback);
-        AutoIncrementModel.findOneAndUpdate({_id:obj}, {$inc:{value:1}}).Promise
        return new Promise (function (resolve, reject) {
            AutoIncrementModel.findOneAndUpdate({_id:obj}, {$inc:{value:1}}, function(err,doc,res) {
-               console.log("err:" +err);
-               console.log("" + doc.value + "_id"+doc._id);
                 if (!err) {
-                    resolve(doc.value);
+                    resolve(obj.substr(0, 1)+doc.value);
                 } else {
                     reject(err);
                 }
@@ -44,26 +41,16 @@ var autoIncrement = {
         userEntity.save(callback);
     },
     getArticleId: function (callback) {
-        this.getNextId("Article",function(err, res) {
-            var id = "A" + res.value;
-            callback(err, id);
-        })
+        return autoIncrement.getNextId("Article");
     },
     getTagId: function (callback) {
-        this.getNextId("Tag",function(err, res) {
-            var id = "T" + res.value;
-            callback(err, id);
-        })
+        return autoIncrement.getNextId("Tag");
     },
     getSpecialId: function (callback) {
-        this.getNextId("Special",function(err, res) {
-            var id = "S" + res.value;
-            callback(err, id);
-        })
+        return autoIncrement.getNextId("Special");
     },
     getUserId: function () {
-        var id = autoIncrement.getNextId("User");
-        return "U" + id;
+        return autoIncrement.getNextId("User");
     },
     init: function (callback) {
         var article =  AutoIncrementModel.create({_id:'Article',value:1});
