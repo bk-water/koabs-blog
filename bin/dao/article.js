@@ -25,8 +25,7 @@ var ArticleSchema = new mongoose.Schema({
 var ArticleModel = db.model(tableName.article, ArticleSchema, tableName.article);
 var article = {
     save: function (obj, callback) {
-        var articleEntity = new ArticleModel(obj);
-        return articleEntity.save(callback);
+        return ArticleModel.findOneAndUpdate({_id:obj._id},obj,{upsert:true}).exec();
     },
     check:function(obj, callback) {
         ArticleModel.find({name:obj.name},null, function (err, doc){
@@ -37,9 +36,7 @@ var article = {
         ArticleModel.remove(err, {_id:_id});
     },
     find:function(obj,callback) {
-        ArticleModel.find({_id:obj._id}, function (err, doc){
-            callback(err, doc);
-        });
+        return ArticleModel.find({_id:obj._id}).exec();
     },
     findByPage:function(obj,callback) {
         if(obj.pageSize || obj.pageNo) {

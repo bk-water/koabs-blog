@@ -7,6 +7,7 @@ var autoIncrementDao = koabs.dao.autoIncrement;
 var tagsDao = koabs.dao.tags;
 
 
+
 /**
  * 文章列表页面
  * @param pageNum
@@ -29,23 +30,31 @@ router.get('/', function(req, res, next) {
 /**
  * 文章详情页面
  */
-router.get('/:id', function(req, res, next) {
+router.get('/:id', async (req, res, next) => {
+  // 查询专辑和tag
+  let allTags = await tagsDao.find();
+  let ret = await articleDao.find({_id:req.params.id});
+  let article = {};
 
-  articleDao.find({_id:req.params._id},function(error, ret) {
-    res.render('admin/article_edit', ret);
-  })
+  if(ret.length >0) {
+    article = ret[0];
+    article.tags = await tagsDao.findByIds(article.tagsIdList);
+    article.tags = article.tags.map(function(obj){
+      return obj.tag;
+    }).join(",");
+  }
+  article.allTags = allTags;
+
+  res.render('admin/article_edit', {article:article});
 });
 
 /**
  * 删除文章
  */
 router.delete('/:id', async (req, res, next) => {
- 
-  articleDao.deleteById({_id:req.body._id},function(error, ret) {
-
-    res.json(Result.build(error,"删除成功",null));
-
-  }); 
+    articleDao.deleteById({_id:req.body.id},function(error, ret) {
+      res.json(Result.build(error,"删除成功",null));
+    }); 
 });
 
 /**

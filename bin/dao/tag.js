@@ -63,24 +63,14 @@ var tag = {
 
         return tagsIdList;
     },
-    check:function(obj, callback) {
-        TagModel.find({name:obj.name},null, function (err, doc){
-            console.log(err);
-            console.log(doc)
-            console.log(doc[0].email);
-            callback(err, doc);
-        });
+    find:function(obj,callback) {
+       return TagModel.find({},'tag').exec();
     },
     deleteById: function (_id, callback) {
-        TagModel.remove(err, {_id:_id});
+        // TagModel.remove({_id:_id});
     },
     findByIds: function(ids,callback) {
-        TagModel.find({_id: {$in: ids}}, null, function (err, doc) {
-            console.log(err);
-            console.log(doc)
-            console.log(doc[0].email);
-            callback(err, doc);
-        });
+        return TagModel.find({_id: {$in: ids}}).exec();
     }
 };
 
@@ -89,5 +79,6 @@ module.exports = {
     update:tag.update,
     updateByArticle:tag.updateByArticle,
     deleteById:tag.deleteById,
-    findByIds:tag.findByIds
+    findByIds:tag.findByIds,
+    find:tag.find
 };

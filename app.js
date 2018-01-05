@@ -46,11 +46,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static/src')));
 
 app.use('/', koabs.routes.index);
-app.use('/dashboard', koabs.routes.dashboard);
-app.use('/users', koabs.routes.users);
-app.use('/article', koabs.routes.article);
-app.use('/tags', koabs.routes.tags);
-app.use('/special', koabs.routes.special);
+app.use('/dashboard/user', koabs.routes.users);
+app.use('/dashboard/article', koabs.routes.article);
+app.use('/dashboard/tags', koabs.routes.tags);
+app.use('/dashboard/special', koabs.routes.special);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

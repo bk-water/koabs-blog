@@ -14,18 +14,27 @@
         <main class="content">
           <div class="inner">
             <form action="" id="sForm">
-            <div class="row"><label for="" class="label">标题</label>
-              <div><input type="text" name="title" value="<%= article.title %>" class="ipt"></div>
+                <input type="hidden" name="_id" value="<%= article._id %>">
+            <div class="row">
+              <label for="" class="label">标题</label>
+              <div class="col-sm-4"><input type="text" name="title" value="<%= article.title %>" class="ipt"></div>
             </div>
-            <div class="row"><label for="" class="label">关键字
-                <span>JAVA</span><span>生活</span><span>JS</span>
+            <div class="row"><label for="" class="label">关键字:
+                <% for(var i=0; i<article.allTags.length; i++) { %>  
+                    <span><%= article.allTags[i].tag %></span>          
+                <% } %>  
+                
               </label>
-              <div><input type="text" name="tags" class="ipt"></div>
+              <div><input type="text" name="tags" value="<%= article.tags %>" class="ipt"></div>
             </div>
             <div class="row"><label>专辑</label>
               <div style="display: inline-block">
                 <select name="special" class="form-control">
                   <option value="1">专辑一</option>
+                  <option value="1">专辑二</option>
+                  <option value="1">专辑三</option>
+                  <option value="1">专辑四</option>
+                  <option value="1">专辑五</option>
                 </select>
               </div>
             </div>
@@ -39,7 +48,7 @@
               </div>
             </div>
             <div id="editormd" style="min-height: 300px;">
-              <textarea style="display:none;">### Hello Editor.md !</textarea>
+              <textarea style="display:none;"><%= article.mdContent %></textarea>
             </div>
             <div class="row">
               <button id="submit" class="btn btn-primary">保存</button>
@@ -64,8 +73,13 @@
                 data.push({name:"mdContent",value:editor.getMarkdown()})// 获取 Markdown 源码
                 data.push({name:"content",value:editor.getHTML()})// 获取 html 源码
                 console.log(data);
-                $.post("/article/save",data, function (result) {
-                  
+                $.ajax({
+                  type: "PUT",
+                  url: '/dashboard/article',
+                  data: data,
+                  success: function(ret){
+                      console.log(JSON.stringify(ret));
+                  }
                 });
                 return false;
               })

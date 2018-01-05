@@ -4,7 +4,6 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/css/app.css' />
     <link rel='stylesheet' href='/css/fonts.css' />
-    <link rel='stylesheet' href='/css/bootstrap.min.css' />
   </head>
   <body>
     <div class="wrapper">
@@ -13,18 +12,18 @@
         <% include ../admin/common/navigation %>
         <main class="content">
           <div class="inner">
-           文章列表 <a href="../dashboard/article/edit" class="btn btn-primary">新增文章</a>
+           文章列表 <a href="/dashboard/article/edit" class="btn btn-primary">新增文章</a>
             <table id="table"></table>
           </div>
         </main>
       </section>
     </div>
   </body>
-  <script src="../js/plugin/jquery191.js"></script>
-  <script src="../js/plugin/bootstrap.min.js"></script>
-  <link rel='stylesheet' href='../js/plugin/bootstrap-table/bootstrap-table.css' />
-  <script src="../js/plugin/bootstrap-table/bootstrap-table.js"></script>
-  <script src="../js/plugin/bootstrap-table/bootstrap-table-locale-all.js"></script>
+  <script src="/js/plugin/jquery191.js"></script>
+  <script src="/js/plugin/bootstrap.min.js"></script>
+  <link rel='stylesheet' href='/js/plugin/bootstrap-table/bootstrap-table.css' />
+  <script src="/js/plugin/bootstrap-table/bootstrap-table.js"></script>
+  <script src="/js/plugin/bootstrap-table/bootstrap-table-locale-all.js"></script>
   <script>
     var $table = $('#table'),
             $remove = $('#remove'),
@@ -32,7 +31,7 @@
 
     function initTable() {
       $table.bootstrapTable({
-        url: '/article',
+        url: '/dashboard/article',
 //        height: getHeight(),
         columns: [{
           field: '_id',
@@ -43,7 +42,15 @@
         }, {
           field: 'title',
           title: '标题'
-        }],
+        },{
+          field: 'author',
+          title: '作者'
+        },{
+          field: 'visitors',
+          title: '访问次数'
+        }
+      
+      ],
         pagination:true,
         sidePagination:'server',
 //        paginationLoop:true,
