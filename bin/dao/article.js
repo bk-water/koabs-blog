@@ -40,7 +40,7 @@ var article = {
     },
     findByPage:function(obj,callback) {
         if(obj.pageSize || obj.pageNo) {
-            obj.offset =(obj.pageNo -1) * obj.pageSize0;
+            obj.offset =(obj.pageNo -1) * obj.pageSize;
             obj.limit = obj.pageSize;
         }
 
@@ -61,8 +61,8 @@ var article = {
                 let ret = {};
                 ret.data = doc;
                 ret.paginator = {
-                    pageSize:obj.pageSize,
-                    pageNo:obj.pageNo,
+                    pageSize:obj.limit,
+                    pageNo:(obj.offset/obj.limit) +1,
                     totalCount:count
                 };
 

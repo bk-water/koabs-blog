@@ -8,6 +8,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 // 全局变量
 global.koabs = {}
@@ -42,10 +43,28 @@ app.use(favicon(path.join(__dirname, 'static/src/img', 'logo.png')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.text());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static/src')));
 
+app.use('/dashboard/*|/login',session({
+    secret: 'koabs', // 生成session 的签名
+    name: 'token',   //这里的name值得是cookie的name，默认cookie的name是：connect.sid
+    cookie: {maxAge: 24000000 },  //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
+    resave: false,
+    saveUninitialized: true,
+}));
+
+app.all('/dashboard/*', function (req, res, next) {
+  if(req.session.user) {
+    next()
+  } else {
+    res.json("没有权限访问！")
+  }
+});
+
 app.use('/', koabs.routes.index);
+app.use('/dashboard', koabs.routes.dashboard);
 app.use('/dashboard/user', koabs.routes.users);
 app.use('/dashboard/article', koabs.routes.article);
 app.use('/dashboard/tags', koabs.routes.tags);
