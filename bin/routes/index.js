@@ -66,21 +66,21 @@ router.get('/article/:id', function(req, res, next) {
  * 小玩意 
  */
 router.get('/tools', function(req, res, next) {
-  res.render('index', { title: 'Koabs' });
+  res.render('tools', { title: 'Koabs' });
 });
 
 /**
  * 知识拓展 
  */
-router.get('/extsite', function(req, res, next) {
-  res.render('index', { title: 'Koabs' });
+router.get('/site', function(req, res, next) {
+  res.render('site', { title: 'Koabs' });
 });
 
 /**
  * 关于我 
  */
 router.get('/about', function(req, res, next) {
-  res.render('index', { title: 'Koabs' });
+  res.render('about', { title: 'Koabs' });
 });
 
 /*  后台页面Controller */
