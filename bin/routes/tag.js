@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var tagDao = require("../dao/tag");
+var tagDao = koabs.dao.tagDao;
 
 /**
  *标签列表

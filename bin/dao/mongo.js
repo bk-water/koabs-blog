@@ -2,14 +2,15 @@
  * Created by kevin1 on 5/2/16.
  */
 'use strict';
-var mongoIp = '127.0.0.1',
-    mongoPort = 27017,
+var mongoIp = '115.28.225.78',
+    mongoPort = 3107,
     mongoUsername = 'admin',
     mongoPassword = 'admin',
     mongoDbName = 'koabsblog',
     mongoose = require('mongoose'),
 // 添加用户名 密码 认证
-    db = mongoose.createConnection('mongodb://' + mongoUsername + ':' + mongoPassword + '@' + mongoIp + ':' + mongoPort + '/' + mongoDbName);
+    // db = mongoose.createConnection('mongodb://' + mongoUsername + ':' + mongoPassword + '@' + mongoIp + ':' + mongoPort + '/' + mongoDbName);
+    db = mongoose.createConnection('mongodb://'+ mongoIp + ':' + mongoPort + '/' + mongoDbName);
 console.log('mongoDB connect...');
 mongoose.set('debug', true);
 db.on('error', console.error.bind(console, '连接错误:'));

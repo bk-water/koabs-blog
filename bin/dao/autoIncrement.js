@@ -23,18 +23,34 @@ AutoIncrementSchema.statics.findAndModify = function (query, sort, doc, options,
 var AutoIncrementModel = db.model(tableName.autoIncrement, AutoIncrementSchema, tableName.autoIncrement);
 
 var autoIncrement = {
-    getNextId:function(obj, callback){
+    getNextId:function(obj){
         //var autoIncrementModel = new AutoIncrementModel(obj);
         //var  id = AutoIncrementModel.findAndModify({query:{_id:obj}, update:{$inc:{'value':1}}, new:true},callback);
-        var id = AutoIncrementModel.findOneAndUpdate({_id:obj}, {$inc:{value:1}}, callback);
-        console.log(id);
+       return new Promise (function (resolve, reject) {
+           AutoIncrementModel.findOneAndUpdate({_id:obj}, {$inc:{value:1}}, function(err,doc,res) {
+                if (!err) {
+                    resolve(obj.substr(0, 1)+doc.value);
+                } else {
+                    reject(err);
+                }
+            });
+        });
     },
     create:function(obj, callback){
         var autoEntity = new AutoIncrementModel({_id:obj,value:1});
         userEntity.save(callback);
     },
     getArticleId: function (callback) {
-        this.getNextId("Article",callback)
+        return autoIncrement.getNextId("Article");
+    },
+    getTagId: function (callback) {
+        return autoIncrement.getNextId("Tag");
+    },
+    getSpecialId: function (callback) {
+        return autoIncrement.getNextId("Special");
+    },
+    getUserId: function () {
+        return autoIncrement.getNextId("User");
     },
     init: function (callback) {
         var article =  AutoIncrementModel.create({_id:'Article',value:1});
@@ -49,9 +65,9 @@ var autoIncrement = {
 };
 
 module.exports = {
-    getNextId:autoIncrement.getNextId,
     getArticleId:autoIncrement.getArticleId,
+    getTagId:autoIncrement.getTagId,
+    getSpecialId:autoIncrement.getSpecialId,
+    getUserId:autoIncrement.getUserId,
     init:autoIncrement.init
 };
-
-// 并发编程

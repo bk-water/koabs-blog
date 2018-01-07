@@ -13,7 +13,7 @@ var LoginSchema = new mongoose.Schema({
 })
 
 var UserSchema = new mongoose.Schema({
-    _id: Number,
+    _id: String,
     name: String,
     nikename: String,
     email: String,
@@ -56,7 +56,7 @@ UserSchema.static({
 })
 
 var UserModel = db.model(tableName.user, UserSchema, tableName.user);
-//var userEntity = new UserModel({
+// var userEntity = new UserModel({
 //    _id: null,
 //    name: '张珊',
 //    nikename: 'asd',
@@ -67,7 +67,9 @@ var UserModel = db.model(tableName.user, UserSchema, tableName.user);
 //    role: 1,
 //    createDate: new Date(), // 创建时间
 //    score: 0,// 积分
-//});
+// });
+
+
 
 //userEntity.save();
 
@@ -88,13 +90,8 @@ var user = {
         var userEntity = new UserModel(obj);
         userEntity.save();
     },
-    check:function(obj, callback) {
-        UserModel.find({name:obj.name},null, function (err, doc){
-            console.log(err);
-            console.log(doc)
-            console.log(doc[0].email);
-            callback(err, doc);
-        });
+    login:function(obj, callback) {
+        return UserModel.findOne({name: obj.username, passwd: obj.password}).exec();
     },
     deleteById: function (_id, callback) {
         UserModel.remove(err, {_id:_id});
@@ -104,6 +101,6 @@ var user = {
 module.exports = {
     create:user.create,
     update:user.update,
-    check:user.check,
+    login:user.login,
     deleteById:user.deleteById
 };

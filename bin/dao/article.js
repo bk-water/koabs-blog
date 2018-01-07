@@ -8,7 +8,7 @@ var db = require('./mongo').db;
 var tableName = require('./mongo').tables;
 
 var ArticleSchema = new mongoose.Schema({
-    _id: mongoose.Schema.ObjectId,
+    _id:String,
     author: String, // 作者名称
     date: Date, // 发布时间
     status:Number, // 状态 0 禁用 1 启用
@@ -18,25 +18,17 @@ var ArticleSchema = new mongoose.Schema({
     visitors:Number, // 访问次数
     updateTime:Date, // 更新时间
     //collection:Number, // 属于哪个专辑
-    tagsIdList:[Number], // 标签ID列表
+    tagsIdList:[String], // 标签ID列表
     top:Number // 0不置顶, 1置顶
 });
 
 var ArticleModel = db.model(tableName.article, ArticleSchema, tableName.article);
 var article = {
-    create:function(obj, callback){
-        var articleEntity = new ArticleModel(obj);
-        articleEntity.save(callback);
-    },
-    update: function (obj, callback) {
-        var articleEntity = new ArticleModel(obj);
-        articleEntity.save();
+    save: function (obj, callback) {
+        return ArticleModel.findOneAndUpdate({_id:obj._id},obj,{upsert:true}).exec();
     },
     check:function(obj, callback) {
         ArticleModel.find({name:obj.name},null, function (err, doc){
-            console.log(err);
-            console.log(doc)
-            console.log(doc[0].email);
             callback(err, doc);
         });
     },
@@ -44,17 +36,47 @@ var article = {
         ArticleModel.remove(err, {_id:_id});
     },
     find:function(obj,callback) {
-        ArticleModel.find({_id: mongoose.Types.ObjectId(obj._id)},null, function (err, doc){
-            console.log(err);
-            console.log(doc)
-            callback(err, doc);
+        return ArticleModel.find({_id:obj._id}).exec();
+    },
+    findByPage:function(obj,callback) {
+        if(obj.pageSize || obj.pageNo) {
+            obj.offset =(obj.pageNo -1) * obj.pageSize;
+            obj.limit = obj.pageSize;
+        }
+
+        if(!obj.offset) {
+            obj.offset = 0;
+        }
+        if(!obj.limit) {
+            obj.limit = 10;
+        }
+        
+        
+        ArticleModel.count({name:obj.name}, function (err, count){
+            ArticleModel.find({name:obj.name})
+            .skip(Number.parseInt(obj.offset))
+            .limit(Number.parseInt(obj.limit))
+            .sort({'updateTime':-1})
+            .exec(function(err, doc) {
+                let ret = {};
+                ret.data = doc;
+                ret.paginator = {
+                    pageSize:obj.limit,
+                    pageNo:(obj.offset/obj.limit) +1,
+                    totalCount:count
+                };
+
+                // 返回分页对象
+                callback(err, ret);
+            });
         });
     }
 };
 
 module.exports = {
-    create:article.create,
-    update:article.update,
+    create:article.save,
     deleteById:article.deleteById,
-    find:article.find
+    find:article.find,
+    findByPage:article.findByPage,
+    save:article.save
 };

@@ -1,30 +1,29 @@
 /**
- * Created by kevin1 on 6/28/16.
+ * Created by kevin1 on 5/2/16.
  */
-'use strict';
+//var bson = require(‘bson’),
+var mongoose = require('mongoose');
+var autoIncrement = require('../../dao/autoIncrement');
 
-var	assert = require('assert');
-var   autoIncrement = require('../../dao/autoIncrement');
+// async function  testAutoIncrement (obj){
+//     console.log("Test Start");
+//     var id = await obj.getUserId();
+//     console.log("Test END" + id);
+// }
+// testAutoIncrement(autoIncrement);
 
-describe('AutoIncrement', function() {
+function start(obj, callback) {
+    console.log("OBJ:"+ obj);
+    callback(obj);
+}
 
-    //before(function(done) {
-    //
-    //});
+start(autoIncrement, async(obj) => {
+    console.log("Test Start");
 
-    beforeEach(function(){
-    });
-    describe('generalId', function() {
-
-        it('generalId', function(done) {
-
-            autoIncrement.init(function(err, obj) {
-                assert.ifError(err);
-                console.log(obj);
-                done();
-            });
-        });
-    });
-    after(function() {
-    });
+    for(var v of [1,2,3]) {
+        console.log("each Start" + v);
+        var id = await obj.getUserId();
+        console.log("each END" +id);
+    };
+    console.log("Test END");
 });
