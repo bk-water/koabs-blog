@@ -1,10 +1,11 @@
 
 <!doctype html>
 <html lang="en">
-<% include ./common/head %>
+<%-include("./common/head",{seo:seo})%>
 <body>
 <% include ./common/menu %>
 <div class="main">
+    <content>
     <h2>Html</h2>
     <ul>
         <li><a href="http://www.ruanyifeng.com/blog/" target="_blank">阮一峰的网络日志</a></li>
@@ -37,6 +38,7 @@
     <ul>
         <li><a href="http://colachan.com/categories" target="_blank">可乐橙</a></li>
     </ul>
+    </content>
 </div>
 <% include ./common/footer %>
 </body>

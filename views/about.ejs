@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
-<% include ./common/head %>
+<%-include("./common/head",{seo:seo})%>
 <body>
 <% include ./common/menu %>
 <div class="main">
-
+    <content>
     <h2>简介</h2>
     <p>
         Name:白开水<br>
@@ -39,6 +39,7 @@
         Github: <a href="https://github.com/koabs" target="_blank">https://github.com/koabs</a><br>
         知乎:    <a href="http://www.zhihu.com/people/koabs" target="_blank">http://www.zhihu.com/people/koabs</a>
     </p>
+</content>
 </div>
 <% include ./common/footer %>
 </body>

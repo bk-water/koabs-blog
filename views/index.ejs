@@ -1,107 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <% include ./common/head %>
+  <%-include("./common/head",{seo:seo})%>
   <body>
   <% include ./common/menu %>
 
   <div class="main">
-    <div class="article">
+    <div class="article list">
       <ul>
+        <% for(var i=0; i<data.length; i++) { %>  
         <li>
           <div class="article-body">
-            <div class="article-head"><a href="/">新年计划</a></div>
+            <div class="article-head"><a href="/article/<%= data[i]._id %>"><%= data[i].title %></a></div>
             <div class="article-content">
-              <p>jin手机号可视对讲阿克苏达克赛德哈肯定会卡死过年</p>
+              <p><%= data[i].content %></p>
             </div>
             <div class="article-footer">
-              <i class="icon-icon_clock"></i><span>2017-04-10</span>
-              <i class="icon-icon_book"></i><span>23</span>
-              <tag>[生活]</tag>
+              <i class="icon-icon_clock"></i><span><%= data[i].updateTime.toLocaleDateString() %></span>
+              <i class="icon-icon_book"></i><span><%= data[i].visitors %></span>
+              <% for(var j=0; j<data[i].tags.length; j++) { %>  
+                  <tag>[<%=data[i].tags[j].tag %>]</tag>       
+              <% } %>  
+              
             </div>
           </div>
         </li>
-        <li>
-          <div class="article-body">
-            <div class="article-head"><a href="/">新年计划</a></div>
-            <div class="article-content">
-              <p>过年</p>
-            </div>
-            <div class="article-footer">
-              <i class="icon-icon_clock"></i><span>2017-04-10</span>
-              <i class="icon-icon_book"></i><span>23</span>
-              <i class="icon-icon_book"></i><span>生活</span>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="article-body">
-            <div class="article-head"><a href="/">新年计划</a></div>
-            <div class="article-content">
-              <p>过年</p>
-            </div>
-            <div class="article-footer">
-              <i class="icon-icon_clock"></i><span>2017-04-10</span>
-              <i class="icon-icon_book"></i><span>23</span>
-              <i class="icon-icon_book"></i><span>生活</span>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="article-body">
-            <div class="article-head"><a href="/">新年计划</a></div>
-            <div class="article-content">
-              <p>过年</p>
-            </div>
-            <div class="article-footer">
-              <i class="icon-icon_clock"></i><span>2017-04-10</span>
-              <i class="icon-icon_book"></i><span>23</span>
-              <i class="icon-icon_book"></i><span>生活</span>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="article-body">
-            <div class="article-head"><a href="/">新年计划</a></div>
-            <div class="article-content">
-              <p>过年</p>
-            </div>
-            <div class="article-footer">
-              <i class="icon-icon_clock"></i><span>2017-04-10</span>
-              <i class="icon-icon_book"></i><span>23</span>
-              <i class="icon-icon_book"></i><span>生活</span>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="article-body">
-            <div class="article-head"><a href="/">新年计划</a></div>
-            <div class="article-content">
-              <p>过年</p>
-            </div>
-            <div class="article-footer">
-              <i class="icon-icon_clock"></i><span>2017-04-10</span>
-              <i class="icon-icon_book"></i><span>23</span>
-              <i class="icon-icon_book"></i><span>生活</span>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="article-body">
-            <div class="article-head"><a href="/">新年计划</a></div>
-            <div class="article-content">
-              <p>过年</p>
-            </div>
-            <div class="article-footer">
-              <i class="icon-icon_clock"></i><span>2017-04-10</span>
-              <i class="icon-icon_book"></i><span>23</span>
-              <tag>[生活]</tag>
-            </div>
-          </div>
-        </li>
+        <% } %>  
       </ul>
-      <div class="nav">
-        导航条
-      </div>
+      <div class="clear"></div>
+      <%-include("./common/paginator",{paginator:paginator})%>
     </div>
   </div>
 

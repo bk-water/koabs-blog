@@ -8,6 +8,7 @@ var articleDao = koabs.dao.article;
  */
 router.get('/', async (req, res, next) => {
   articleDao.findByPage({pageSize:10,pageNo:1},function(error,ret) {
+    ret.seo = {title:"白开水"};
     res.render('index', ret);
   });
 });
@@ -17,17 +18,15 @@ router.get('/', async (req, res, next) => {
  */
 router.get('/page/:pageNo', function(req, res, next) {
   let pageNo = req.params.pageNo
-  articleDao.findByPage(req.query,function(error,ret) {
-    res.json(ret);
+  articleDao.findByPage({pageSize:10,pageNo:pageNo},function(error,ret) {
+    res.render('index', ret);
   });
-  res.render('index', { title: 'Koabs' });
 });
 
 /**
  * 标签列表
  */
 router.get('/tags', function(req, res, next) {
-  // ?id=T1
   res.render('index', { title: 'Koabs' });
 });
 
@@ -43,8 +42,7 @@ router.get('/tag/page/:pageNo', function(req, res, next) {
  * 专题列表
  */
 router.get('/specials', function(req, res, next) {
-  // 正则匹配
-  res.render('index', { title: 'Koabs' });
+  res.json("开发中");
 });
 
 /**
@@ -59,6 +57,7 @@ router.get('/special/page/:pageNo', function(req, res, next) {
  * 文章详情
  */
 router.get('/article/:id', function(req, res, next) {
+  ret.seo = {title:"白开水"};
   res.render('index', { title: 'Koabs' });
 });
 
@@ -66,21 +65,21 @@ router.get('/article/:id', function(req, res, next) {
  * 小玩意 
  */
 router.get('/tools', function(req, res, next) {
-  res.render('tools', { title: 'Koabs' });
+  res.render('tools', { seo:  {title:"白开水"}});
 });
 
 /**
  * 知识拓展 
  */
 router.get('/site', function(req, res, next) {
-  res.render('site', { title: 'Koabs' });
+  res.render('site', {seo:  {title:"白开水"} });
 });
 
 /**
  * 关于我 
  */
 router.get('/about', function(req, res, next) {
-  res.render('about', { title: 'Koabs' });
+  res.render('about', { seo:  {title:"白开水"} });
 });
 
 /*  后台页面Controller */

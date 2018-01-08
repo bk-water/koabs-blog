@@ -6,6 +6,8 @@
 var mongoose = require('mongoose');
 var db = require('./mongo').db;
 var tableName = require('./mongo').tables;
+var tagsDao = koabs.dao.tags;
+var moment = require('moment');
 
 var ArticleSchema = new mongoose.Schema({
     _id:String,
@@ -57,7 +59,7 @@ var article = {
             .skip(Number.parseInt(obj.offset))
             .limit(Number.parseInt(obj.limit))
             .sort({'updateTime':-1})
-            .exec(function(err, doc) {
+            .exec( async (err, doc) => {
                 let ret = {};
                 ret.data = doc;
                 ret.paginator = {
@@ -65,7 +67,13 @@ var article = {
                     pageNo:(obj.offset/obj.limit) +1,
                     totalCount:count
                 };
-
+                // 查询tag 和专辑
+                if(ret.data.length >0) {
+                    for(let i=0;i< ret.data.length; i++) {
+                        ret.data[i].tags = await tagsDao.findByIds(ret.data[i].tagsIdList);
+                        // ret.data[i].updateTime = moment(ret.data[i].updateTime).format('YYYY-MM-DD');
+                    }  
+                }
                 // 返回分页对象
                 callback(err, ret);
             });
