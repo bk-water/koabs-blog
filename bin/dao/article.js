@@ -38,7 +38,8 @@ var article = {
         ArticleModel.remove(err, {_id:_id});
     },
     find:function(obj,callback) {
-        return ArticleModel.find({_id:obj._id}).exec();
+        // 根据ID 查询
+        return ArticleModel.findOneAndUpdate({_id:obj._id},{$inc:{visitors:1}}).exec();
     },
     findByPage:function(obj,callback) {
         if(obj.pageSize || obj.pageNo) {

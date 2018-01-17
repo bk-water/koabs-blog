@@ -18,12 +18,15 @@ function start(obj, callback) {
 }
 
 start(autoIncrement, async(obj) => {
-    console.log("Test Start");
+    autoIncrement.init(function(err,values) {
 
-    for(var v of [1,2,3]) {
-        console.log("each Start" + v);
-        var id = await obj.getUserId();
-        console.log("each END" +id);
-    };
-    console.log("Test END");
+    });
+    // console.log("Test Start");
+
+    // for(var v of [1,2,3]) {
+    //     console.log("each Start" + v);
+    //     var id = await obj.getUserId();
+    //     console.log("each END" +id);
+    // };
+    // console.log("Test END");
 });

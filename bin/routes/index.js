@@ -27,15 +27,14 @@ router.get('/page/:pageNo', function(req, res, next) {
  * 标签列表
  */
 router.get('/tags', function(req, res, next) {
-  res.render('index', { title: 'Koabs' });
+  res.json("开发中");
 });
 
 /**
  * 标签文章列表
  */
 router.get('/tag/page/:pageNo', function(req, res, next) {
-  // ?id=T1
-  res.render('index', { title: 'Koabs' });
+  res.json("开发中");
 });
 
 /**
@@ -56,9 +55,13 @@ router.get('/special/page/:pageNo', function(req, res, next) {
 /**
  * 文章详情
  */
-router.get('/article/:id', function(req, res, next) {
-  ret.seo = {title:"白开水"};
-  res.render('index', { title: 'Koabs' });
+router.get('/article/:id', async (req, res, next) => {
+  let _id = req.params.id
+  let article = await articleDao.find({_id:_id})
+  let ret = {};
+  ret.seo = {title:article.title};
+  ret.article = article;
+  res.render("article", ret);
 });
 
 /**

@@ -2,7 +2,7 @@
  * Created by kevin1 on 5/2/16.
  */
 'use strict';
-var mongoIp = '115.28.225.78',
+var mongoIp = '47.75.10.26',
     mongoPort = 3107,
     mongoUsername = 'admin',
     mongoPassword = 'admin',

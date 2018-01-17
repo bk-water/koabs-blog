@@ -3,43 +3,64 @@
  */
 'use strict';
 
-var	assert = require('assert');
+// var	assert = require('assert');
 var   User = require('../../dao/user');
 
-describe('User', function() {
+// describe('User', function() {
 
-    //before(function(done) {
-    //
-    //});
+//     //before(function(done) {
+//     //
+//     //});
 
-    beforeEach(function(){
+//     beforeEach(function(){
 
+//     });
+
+//     describe('create', function() {
+
+//         it('create user', function(done) {
+//             var obj = {
+//                 _id: null,
+//                 name: 'koabsLYX',
+//                 nikename: '张珊LIN',
+//                 email: 'ZHANG@qq.com',
+//                 passwd: 'LYX2018',
+//                 locked: true,
+//                 sex: '女',
+//                 role: 3,
+//                 createDate: new Date(), // 创建时间
+//                 score: 0,// 积分
+//             }
+//             User.create(obj, function(err, obj) {
+//                 assert.ifError(err);
+//                 console.log(obj);
+//                 done();
+//             });
+//         });
+//     });
+
+//     after(function() {
+
+//     });
+// });
+
+
+function addUser() {
+    var obj = {
+        _id: null,
+        name: 'koabsLYX',
+        nikename: '张珊LIN',
+        email: 'ZHANG@qq.com',
+        passwd: 'LYX2018',
+        locked: true,
+        sex: '女',
+        role: 3,
+        createDate: new Date(), // 创建时间
+        score: 0,// 积分
+    }
+    User.create(obj, function(err, obj) {
+        console.log(obj);
     });
+}
 
-    describe('create', function() {
-
-        it('create user', function(done) {
-            var obj = {
-                _id: null,
-                name: '张珊LI',
-                nikename: '张珊LIN',
-                email: 'ZHANG@qq.com',
-                passwd: 'abc123',
-                locked: true,
-                sex: '女',
-                role: 3,
-                createDate: new Date(), // 创建时间
-                score: 0,// 积分
-            }
-            User.create(obj, function(err, obj) {
-                assert.ifError(err);
-                console.log(obj);
-                done();
-            });
-        });
-    });
-
-    after(function() {
-
-    });
-});
+addUser();
