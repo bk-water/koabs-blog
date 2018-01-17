@@ -19,6 +19,7 @@ router.get('/', async (req, res, next) => {
 router.get('/page/:pageNo', function(req, res, next) {
   let pageNo = req.params.pageNo
   articleDao.findByPage({pageSize:10,pageNo:pageNo},function(error,ret) {
+    ret.seo = {title:"白开水"};
     res.render('index', ret);
   });
 });
