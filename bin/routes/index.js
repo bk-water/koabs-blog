@@ -60,6 +60,8 @@ router.get('/article/:id', async (req, res, next) => {
   let _id = req.params.id
   let article = await articleDao.find({_id:_id})
   let ret = {};
+  // md 置为null
+  ret.data[i].mdContent = null;
   ret.seo = {title:article.title};
   ret.article = article;
   res.render("article", ret);

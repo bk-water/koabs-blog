@@ -8,6 +8,7 @@ var db = require('./mongo').db;
 var tableName = require('./mongo').tables;
 var tagsDao = koabs.dao.tags;
 var moment = require('moment');
+var trimHtml = require('trim-html');
 
 var ArticleSchema = new mongoose.Schema({
     _id:String,
@@ -73,6 +74,9 @@ var article = {
                     for(let i=0;i< ret.data.length; i++) {
                         ret.data[i].tags = await tagsDao.findByIds(ret.data[i].tagsIdList);
                         // ret.data[i].updateTime = moment(ret.data[i].updateTime).format('YYYY-MM-DD');
+                        // 文章内容设置为摘要
+                        ret.data[i].content = trimHtml(ret.data[i].content,{ limit: 100 });
+                        ret.data[i].mdContent = null;
                     }  
                 }
                 // 返回分页对象

@@ -5,14 +5,20 @@
 <body>
 <% include ./common/menu %>
 <div class="main">
-    <content>
-    <ul>
-       文章详情
-    </ul>
-    </content>
+    <div class="article">
+        <div class="article-head"><%= article.title %></div>
+        <div class="article-content"><%= article.content %></div>
+        <div class="article-footer">
+            <i class="icon-icon_clock"></i><span><%= article.updateTime.toLocaleDateString() %></span>
+            <i class="icon-icon_book"></i><span><%= article.visitors %></span>
+                <% for(var j=0; j<article.tags.length; j++) { %>  
+                    <tag>[<%=article.tags[j].tag %>]</tag>       
+                <% } %>  
+            </div>
+        </div>
+    </div>
 </div>
+<button class="go_top">返回顶部</button>  
 <% include ./common/footer %>
 </body>
 </html>
-
-

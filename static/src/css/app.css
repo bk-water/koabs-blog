@@ -567,3 +567,11 @@ a:visited {
     padding-top: 30px;
     min-height: 100px;
 }
+
+.go_top {
+    position: fixed;  
+    bottom:30px;  
+    right: 30px;  
+    border:1px solid #888;  
+}
+
