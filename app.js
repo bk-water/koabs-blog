@@ -28,7 +28,7 @@ koabs.routes.users = require('./bin/routes/user');
 koabs.routes.article = require('./bin/routes/article');
 koabs.routes.tags = require('./bin/routes/tag');
 koabs.routes.special = require('./bin/routes/special');
-
+koabs.routes.files = require('./bin/routes/files');
 
 
 var app = express();
@@ -64,11 +64,13 @@ app.all('/dashboard/*', function (req, res, next) {
 });
 
 app.use('/', koabs.routes.index);
+app.use('/files', koabs.routes.files);
 app.use('/dashboard', koabs.routes.dashboard);
 app.use('/dashboard/user', koabs.routes.users);
 app.use('/dashboard/article', koabs.routes.article);
 app.use('/dashboard/tags', koabs.routes.tags);
 app.use('/dashboard/special', koabs.routes.special);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

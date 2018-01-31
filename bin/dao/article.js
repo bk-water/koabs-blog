@@ -7,7 +7,6 @@ var mongoose = require('mongoose');
 var db = require('./mongo').db;
 var tableName = require('./mongo').tables;
 var tagsDao = koabs.dao.tags;
-var moment = require('moment');
 var trimHtml = require('trim-html');
 
 var ArticleSchema = new mongoose.Schema({
