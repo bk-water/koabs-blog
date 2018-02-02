@@ -9,6 +9,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var multer = require('multer');
+var fs = require('fs');
 
 // 全局变量
 global.koabs = {}
@@ -46,6 +48,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static/src')));
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+  cb(null, '/tmp/bkwater-uploads')
+  },
+  filename: function (req, file, cb) {
+  cb(null, file.fieldname + '-' + Date.now())
+  }
+  });
+app.use(multer({ storage: storage }).any());
 
 app.use('/dashboard/*|/login',session({
     secret: 'koabs', // 生成session 的签名
