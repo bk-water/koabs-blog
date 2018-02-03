@@ -51,13 +51,13 @@ app.use(express.static(path.join(__dirname, 'static/src')));
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-  cb(null, '/tmp/bkwater-uploads')
+    cb(null, '/tmp/bkwater-uploads')
   },
   filename: function (req, file, cb) {
-  cb(null, file.fieldname + '-' + Date.now())
+    cb(null,Date.now()+'-' + file.originalname)
   }
   });
-app.use(multer({ storage: storage }).any());
+app.use('/files/upload',multer({ storage: storage }).any());
 
 app.use('/dashboard/*|/login',session({
     secret: 'koabs', // 生成session 的签名
