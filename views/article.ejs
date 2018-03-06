@@ -5,10 +5,10 @@
 <body>
 <% include ./common/menu %>
 <div class="main">
-    <div class="article">
-        <div class="article-head"><%= article.title %></div>
-        <div class="article-content"><%= article.content %></div>
-        <div class="article-footer">
+    <div class="article-detail">
+        <div class="head"><%- article.title %></div>
+        <div class="content"><%- article.content %></div>
+        <div class="footer">
             <i class="icon-icon_clock"></i><span><%= article.updateTime.toLocaleDateString() %></span>
             <i class="icon-icon_book"></i><span><%= article.visitors %></span>
                 <% for(var j=0; j<article.tags.length; j++) { %>  

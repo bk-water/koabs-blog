@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var usersDao = koabs.dao.users;
 var articleDao = koabs.dao.article;
+var tagsDao = koabs.dao.tags;
 
 /**
  * 前台首页
@@ -60,10 +61,9 @@ router.get('/article/:id', async (req, res, next) => {
   let _id = req.params.id
   let article = await articleDao.find({_id:_id})
   let ret = {};
-  // md 置为null
-  ret.data[i].mdContent = null;
   ret.seo = {title:article.title};
-  ret.article = article;
+  ret.article = article._doc;
+  ret.article.tags = await tagsDao.findByIds(article.tagsIdList);
   res.render("article", ret);
 });
 

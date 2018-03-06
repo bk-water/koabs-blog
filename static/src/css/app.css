@@ -561,11 +561,57 @@ a:visited {
     overflow: hidden;
 }
 
-.main content {
+/* .main content {
     display: block;
     margin: 0px 30px 30px 30px;
     padding-top: 30px;
     min-height: 100px;
+} */
+
+
+
+.main .article-detail .head {
+    margin: 0px 30px 30px 30px;
+    padding-top: 30px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.main .article-detail .footer {
+    margin: 0px 30px 30px 30px;
+    padding-top: 30px;
+    font-size: 24px;
+    text-align: center;
+}
+.main .article-detail .content {
+    min-height: 100px;
+    margin: 0px 30px 30px 30px;
+}
+
+.main .article-detail .content p {
+    text-indent:2em;
+}
+
+.main .article-detail .footer i {
+    font-size: 1.5rem;
+    color: #666;
+    float: left;
+    margin-right: 2px;
+}
+
+.main .article-detail .footer span {
+    font-size: 0.7rem;
+    color: #666;
+    line-height: 1.5rem;
+    float: left;
+    margin-right: 10px;
+}
+.main .article-detail .footer tag {
+    font-size: 0.7rem;
+    color: red;
+    line-height: 1.5rem;
+    float: left;
+    margin-right: 10px;
 }
 
 .go_top {
