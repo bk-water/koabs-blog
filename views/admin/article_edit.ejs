@@ -85,7 +85,7 @@
             </div>
             <!-- 文件显示 -->
             <div class="table table-striped files" id="previews">
-              <div id="" class="file-row">
+              <div id="template" class="file-row">
                 <!-- This is used as the file preview template -->
                 <div>
                     <span class="preview"><img data-dz-thumbnail=""></span>
@@ -159,7 +159,7 @@
           previewNode.parentNode.removeChild(previewNode);
 
           var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-            url: "http://www.torrentplease.com/dropzone.php", // Set the url
+            url: "/files/upload", // Set the url
             thumbnailWidth: 80,
             thumbnailHeight: 80,
             parallelUploads: 20,

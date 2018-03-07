@@ -36,7 +36,7 @@ router.get('/:id', async (req, res, next) => {
   let ret = await articleDao.find({_id:req.params.id});
   let article = {};
 
-  if(ret.length >0) {
+  if(ret) {
     article = ret[0];
     article.tags = await tagsDao.findByIds(article.tagsIdList);
     article.tags = article.tags.map(function(obj){
