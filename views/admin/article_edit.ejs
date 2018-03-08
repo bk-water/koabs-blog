@@ -2,8 +2,9 @@
 <html>
   <head>
     <title><%= article.title %></title>
-    <link rel='stylesheet' href='/css/app.css' />
-    <link rel='stylesheet' href='/css/fonts.css' />
+    <!-- <link rel='stylesheet' href='/css/app.css' />
+    <link rel='stylesheet' href='/css/fonts.css' /> -->
+    <link rel='stylesheet' href='/css/bootstrap.min.css' />
     <link rel='stylesheet' href='/js/plugin/md/css/editormd.min.css' />
   </head>
   <body>
@@ -159,7 +160,7 @@
           previewNode.parentNode.removeChild(previewNode);
 
           var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-            url: "/files/upload", // Set the url
+            url: "http://127.0.0.1:3000/files/upload", // Set the url
             thumbnailWidth: 80,
             thumbnailHeight: 80,
             parallelUploads: 20,
