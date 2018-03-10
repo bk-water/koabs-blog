@@ -12,7 +12,7 @@
           <div class="article-body">
             <div class="article-head"><a href="/article/<%= data[i]._id %>"><%= data[i].title %></a></div>
             <div class="article-content">
-              <p><%- data[i].content %></p>
+              <p><%- data[i].content.html %></p>
             </div>
             <div class="article-footer">
               <i class="icon-icon_clock"></i><span><%= data[i].updateTime.toLocaleDateString() %></span>

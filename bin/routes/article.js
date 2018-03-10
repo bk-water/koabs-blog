@@ -37,7 +37,7 @@ router.get('/:id', async (req, res, next) => {
   let article = {};
 
   if(ret) {
-    article = ret[0];
+    article = ret;
     article.tags = await tagsDao.findByIds(article.tagsIdList);
     article.tags = article.tags.map(function(obj){
       return obj.tag;

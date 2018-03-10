@@ -74,8 +74,8 @@ var article = {
                         ret.data[i].tags = await tagsDao.findByIds(ret.data[i].tagsIdList);
                         // ret.data[i].updateTime = moment(ret.data[i].updateTime).format('YYYY-MM-DD');
                         // 文章内容设置为摘要
-                        ret.data[i].content = trimHtml(ret.data[i].content,{ limit: 100 });
-                        ret.data[i].mdContent = null;
+                        ret.data[i]._doc.content = trimHtml(ret.data[i].content,{ limit: 200 });
+                        ret.data[i]._doc.mdContent = null;
                     }  
                 }
                 // 返回分页对象
